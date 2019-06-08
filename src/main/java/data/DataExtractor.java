@@ -63,10 +63,10 @@ public class DataExtractor {
 
                 if(j > 0){ //We create the edge with the precedent station, so not for the first one
                     if(weighted){
-                        double distance = calculateDistance(Double.parseDouble((String)currentStation.get("lng")),
-                                Double.parseDouble((String)currentStation.get("lat")),
-                                Double.parseDouble((String)precedent.get("lng")),
-                                Double.parseDouble((String)precedent.get("lat")));
+                        double distance = calculateDistance(Double.parseDouble((String)currentStation.get("lat")),
+                                Double.parseDouble((String)currentStation.get("lng")),
+                                Double.parseDouble((String)precedent.get("lat")),
+                                Double.parseDouble((String)precedent.get("lng")));
                         ((WeightedGraph)graph).addEdge(currentName, (String)precedent.get("nom"), distance);
                     } else {
                         ((UnweightedGraph)graph).addEdge(currentName, (String)precedent.get("nom"));
@@ -82,10 +82,10 @@ public class DataExtractor {
      * Calculate distance between two points
      */
     private static double calculateDistance(double xA, double yA, double xB, double yB){
-        double ac = Math.abs(yB - yA);
-        double cb = Math.abs(xB - xA);
-
-        return Math.hypot(ac, cb);
+        int deglen = 110250;
+        double deltaX = xA - xB;
+        double deltaY = (yA - yB) * Math.cos(xB);
+        return deglen * Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 
 }

@@ -71,10 +71,10 @@ public abstract class CalculateDiameters {
         System.out.println();
         System.out.println("The longest path is from "+ mostExcentric.getStartingPoint() + " to " + farthestStation + ".");
         for(int i=0; i<pathToNode.size(); i++) {
-            System.out.print(pathToNode.get(i) + " -- " + weightsToNode.get(i) + " units --> ");
+            System.out.print(pathToNode.get(i) + " -- " + String.format("%.2f", weightsToNode.get(i)) + " meters --> ");
         }
         System.out.println();
-        System.out.println("The total distance is : " + distance[allStations.indexOf(farthestStation)] + "");
+        System.out.println("The total distance is : " + String.format("%.2f", distance[allStations.indexOf(farthestStation)]) + "");
         System.out.println();
 	}
 	

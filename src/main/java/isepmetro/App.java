@@ -13,7 +13,7 @@ import java.io.File;
  * TODO : Note : dans rapport dire qu'on utilise liste & pas matrix parce que beaucoup de stations pour peu de liaisons
  */
 public class App {
-    private final static String DATA_PATH = "C:\\Projects\\J2EE Workspace\\parismetro\\src\\main\\resources\\data.json"; //Data file name
+    private final static String DATA_PATH = "src\\main\\resources\\data.json"; //Data file name
 
     public static void main(String[] args) {
         ClassLoader classLoader = App.class.getClassLoader();
