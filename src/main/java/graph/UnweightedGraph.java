@@ -27,4 +27,8 @@ public class UnweightedGraph implements Graph {
     public boolean containsVertex(String label){
         return adj.containsKey(label);
     }
+    
+    public Map<String, List<String>> getMap(){
+    	return adj;
+    }
 }

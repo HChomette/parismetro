@@ -27,4 +27,20 @@ public class WeightedGraph implements Graph{
     public boolean containsVertex(String label){
         return adj.containsKey(label);
     }
+    
+    public Map<String, List<WeightedEdge>> getMap(){
+    	return adj;
+    }
+
+    public double maxWeight() {
+    	double maxWeight = 0;   	
+    	for(String vertex : adj.keySet()) {   		
+    		for(WeightedEdge edge : adj.get(vertex)) {
+    			if(edge.getWeight()>maxWeight) {
+    				maxWeight = edge.getWeight();
+    			}
+    		}
+    	}
+    	return maxWeight;
+    }
 }
