@@ -6,12 +6,12 @@ import java.util.List;
 
 public class BFS {
 
-	private boolean[] marked;
-	private int[] previous;
-	private double[] distance;
-	private String startingPoint = "";
+	private boolean[] marked; // Has the node been visited
+	private int[] previous; // Gives the previous node on the path
+	private double[] distance; // Distance from original node
+	private String startingPoint = ""; // on which node we operate the BFS
 	private double excentricity = 0;
-	private String farthestStation = "";
+	private String farthestStation = ""; // used to calculate excentricity
 	
 	List<String> allStations = new ArrayList<String>();
 	
@@ -22,8 +22,8 @@ public class BFS {
 		
 		startingPoint = start;
 		
-		for(String vertex : graph.getMap().keySet()) {
-			allStations.add(vertex);
+		for(String station : graph.getMap().keySet()) {
+			allStations.add(station);
 		}
 		
 		List<String> visitedNodes = new ArrayList<String>();
@@ -45,12 +45,13 @@ public class BFS {
         List<String> neighbors = new ArrayList<String>();
         boolean newNodes = true;
         while(newNodes) {
+        	// In BFS we explore level per level
             for(String c : currentLevel) {
-                neighbors = graph.getAdj(c);
+                neighbors = graph.getAdj(c); // We get the neighboring stations
                 for(String n : neighbors) {
                     if(!nextLevel.contains(n) && !visitedNodes.contains(n)) {
                         nextLevel.add(n);
-                        marked[allStations.indexOf(n)] = true;
+                        marked[allStations.indexOf(n)] = true; // the station is confirmed
                         previous[allStations.indexOf(n)] = allStations.indexOf(c);
                         distance[allStations.indexOf(n)] = distance[allStations.indexOf(c)] + 1;
                     }
@@ -87,7 +88,7 @@ public class BFS {
             pathToNode.add(0,currentNode);
 
         }
-        System.out.print("The shortest path from " + startingPoint + " to " + destination + " is ");
+        System.out.print(" The shortest path from '" + startingPoint + "' to '" + destination + "' is ");
         for(String i : pathToNode) {
             System.out.print(i + " -> ");
         }
@@ -98,6 +99,7 @@ public class BFS {
     	return excentricity;
     }
 	
+	// calculates the excentricity of the station of the BFS and the station it goes to (farthest one)
 	public void calculateFarthest() {
     	double excentricity = 0;
     	String farthestStation = startingPoint;

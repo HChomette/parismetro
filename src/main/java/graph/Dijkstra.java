@@ -6,12 +6,12 @@ import java.util.List;
 public class Dijkstra {
 
 	
-	private boolean[] marked;
-	private int[] previous;
-	private double[] distance;
-	private String startingPoint = "";
+	private boolean[] marked; // Has the node been visited
+	private int[] previous; // Gives the previous node on the path
+	private double[] distance; // Distance from original node
+	private String startingPoint = ""; // on which node we operate the BFS
 	private double excentricity;
-	private String farthestStation = "";
+	private String farthestStation = ""; // used to calculate excentricity
 
 	private List<String> allStations = new ArrayList<String>();
 	
@@ -25,8 +25,8 @@ public class Dijkstra {
 
 		startingPoint = start;
 		
-		for(String vertex : graph.getMap().keySet()) {
-			allStations.add(vertex);
+		for(String station : graph.getMap().keySet()) {
+			allStations.add(station);
 		}
 		
 		String currentNode = start;
@@ -54,6 +54,10 @@ public class Dijkstra {
 	
 		// while there are still nodes to check
 		while(newNodes) {
+			
+			// Will count the paths taken for the clustering
+			updatePathsCounter(graph, currentNode);
+			
 			// We get edges from the current node
 			List<WeightedEdge> currentEdges = graph.getAdj(currentNode);
 			// We remember relevant neighbors
@@ -94,6 +98,21 @@ public class Dijkstra {
 		calculateFarthest();
 	}
 	
+	
+	public void updatePathsCounter(WeightedGraph graph, String station) {
+		if(previous[allStations.indexOf(station)] !=0) {
+			String previousStation = allStations.get(previous[allStations.indexOf(station)]);
+			List<WeightedEdge> possibleEdges = graph.getAdj(previousStation);
+			for(WeightedEdge edge : possibleEdges) {
+				if(edge.getTarget() == station) {
+					edge.addPassedThrough();
+					updatePathsCounter(graph, previousStation);
+					break;
+				}
+			}
+		}
+	}
+	
 	// Checks if there is a path to the given node
     public boolean hasPathTo(String v) {
         return marked[allStations.indexOf(v)];
@@ -112,7 +131,7 @@ public class Dijkstra {
             pathToNode.add(0,currentNode);
 
         }
-        System.out.print("The shortest path from" + startingPoint + " to " + destination + " is ");
+        System.out.print(" The shortest path from '" + startingPoint + "' to '" + destination + "' is ");
         for(String i : pathToNode) {
             System.out.print(i + " -> ");
         }
@@ -159,4 +178,5 @@ public class Dijkstra {
 	public List<String> getAllStations() {
 		return allStations;
 	}
+	
 }

@@ -6,6 +6,7 @@ import graph.WeightedGraph;
 import graph.BFS;
 import graph.Dijkstra;
 import graph.CalculateDiameters;
+import graph.GraphClustering;
 
 import java.io.File;
 
@@ -21,18 +22,38 @@ public class App {
 
         UnweightedGraph uGraph = DataExtractor.createUnweightedGraph(file); //Unweighted graph final object
         WeightedGraph wGraph = DataExtractor.createWeightedGraph(file); //Weighted graph final object
-        //System.out.println(uGraph.getAdj("Opéra"));
-        System.out.println(wGraph.getAdj("Opéra")); //Adjacents examples
         
-        String station = "Abbesses";
-        //BFS graphBFS = new BFS(uGraph, station);
-        //graphBFS.printSP("Créteil-L'Echat (Hôpital Henri Mondor)");
+        String station1 = "Opéra";
+        System.out.println();
+        System.out.println("________________________________ Graph creation ___________________________________");
+        System.out.println();
+        System.out.println(" Unweighted graph of Paris stations, adjacent stations to " + station1 + " :");
+        System.out.print("\t");
+        System.out.println(uGraph.getAdj(station1));
+        System.out.println();
         
+        System.out.println(" Weighted graph of Paris stations, adjacent stations to " + station1 + " :");
+        System.out.print("\t");
+        System.out.println(wGraph.getAdj(station1)); //Adjacents examples
+        System.out.println();
+        
+        System.out.println("________________________________ Shortest Path Example ____________________________");
+        System.out.println();
+        String station2 = "Abbesses";
+        BFS graphBFS = new BFS(uGraph, station2);
+        graphBFS.printSP("Créteil-L'Echat (Hôpital Henri Mondor)");
+        System.out.println();
+        System.out.println("________________________________ BFS Diameter _____________________________________");
+ 
         CalculateDiameters.Udiameter(uGraph);
         
+        System.out.println("________________________________ Dijkstra Diameter _________________________________");
         //Dijkstra graphDijkstra = new Dijkstra(wGraph, station);
         //graphDijkstra.printSP("Maison Blanche");
-        
         CalculateDiameters.Wdiameter(wGraph); 
+        System.out.println("________________________________ Betweeness ________________________________________");
+        System.out.println();
+        WeightedGraph clustersGraph = DataExtractor.createWeightedGraph(file);
+        GraphClustering.getClusters(clustersGraph);
     }
 }
